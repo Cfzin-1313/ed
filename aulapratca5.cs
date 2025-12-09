@@ -1,51 +1,50 @@
-using system;
-using system.IO;
+using System;
+using System.IO;
 
-class program
+class Program
 {
-    static void main()
+    static void Main()
     {
-        console.writeline("Digite o caminho de uma pasta (ex: C:\\windows\\web ou. para de atual):");
-        string caminhoinicial=console.readline();
+        Console.WriteLine("Digite o caminho de uma pasta (ex: C:\\windows\\web ou . para atual):");
+        string caminhoInicial = Console.ReadLine();
 
-        if(caminhoinicial==".") caminhoinicial=directory.getcurrentdirectory();
+        if (caminhoInicial == ".") caminhoInicial = Directory.GetCurrentDirectory();
 
         try
         {
-            console.writeline($"\nexplorando:{caminhoinicial}\n");
-            explorardiretorios(caminhoinicial,0);
+            Console.WriteLine($"\nExplorando: {caminhoInicial}\n");
+            ExplorarDiretorios(caminhoInicial, 0);
         }
-        catch(exception ex)
+        catch (Exception ex)
         {
-            console.writeline("Erro ao acessar pasta:" + ex.message);
+            Console.WriteLine("Erro ao acessar pasta: " + ex.Message);
         }
     }
 
-    static void explorardiretorios(string caminho, int nivel)
+    static void ExplorarDiretorios(string caminho, int nivel)
     {
         try
         {
-            string indentacao=new string('-', nivel*2);
+            string indentacao = new string('-', nivel * 2);
 
-            string arquivos=directory.getfiles(caminho);
+            string[] arquivos = Directory.GetFiles(caminho);
 
-            foreach (string arquivos in arquivos)
+            foreach (string arquivo in arquivos)
             {
-                console.writeline($"{intentacao} {path.getfilename(arquivo)}");
+                Console.WriteLine($"{indentacao} {Path.GetFileName(arquivo)}");
             }
 
-            string subdiretorios=directory.getdirectories(caminho);
+            string[] subdiretorios = Directory.GetDirectories(caminho);
             foreach (string dir in subdiretorios)
             {
-                console.writeline($"{indentacao} [{path.getfilename(dir)}]");
+                Console.WriteLine($"{indentacao} [{Path.GetFileName(dir)}]");
 
-                explorardiretorios(dir, nivel + 1);
+                ExplorarDiretorios(dir, nivel + 1);
             }
         }
-
-        catch(unauthorizedacessexception)
+        catch (UnauthorizedAccessException)
         {
-            
+           
         }
     }
 }
